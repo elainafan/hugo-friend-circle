@@ -11,148 +11,188 @@
   color: var(--body-text-color, #1f2937);
 }
 .friend-circle * { box-sizing: border-box; }
-.friend-circle__hero {
-  margin-bottom: 18px;
-  padding: 22px;
-  border: 1px solid var(--fc-border);
-  border-radius: 18px;
-  background: linear-gradient(135deg, rgba(59,130,246,.10), rgba(16,185,129,.08));
-  box-shadow: var(--shadow-l1, 0 10px 24px rgba(15, 23, 42, .08));
+.friend-circle__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
 }
-.friend-circle__hero h1 {
-  margin: 0 0 8px;
+.friend-circle__header h1 {
+  margin: 0 0 6px;
   color: var(--fc-main);
   font-size: 2.4rem;
   line-height: 1.2;
 }
-.friend-circle__hero p {
+.friend-circle__header p {
   margin: 0;
   color: var(--fc-muted);
-  font-size: 1.5rem;
+  font-size: 1.45rem;
 }
-.friend-circle__stats,
-.friend-circle__toolbar {
+.friend-circle__stats {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin: 14px 0;
+  justify-content: flex-end;
+  gap: 8px;
 }
-.friend-circle__stat,
-.friend-circle__select,
-.friend-circle__search {
-  min-height: 38px;
+.friend-circle__stats span {
+  padding: 5px 9px;
+  border: 1px solid var(--fc-border);
+  border-radius: 8px;
+  background: var(--fc-card);
+  color: var(--fc-muted);
+  font-size: 1.25rem;
+  box-shadow: var(--shadow-l1, 0 6px 16px rgba(15, 23, 42, .06));
+}
+.friend-circle__toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.friend-circle__search,
+.friend-circle__select {
+  min-height: 40px;
   border: 1px solid var(--fc-border);
   border-radius: 10px;
   background: var(--fc-card);
   color: var(--fc-main);
-  box-shadow: var(--shadow-l1, none);
-}
-.friend-circle__stat {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 12px;
-  color: var(--fc-muted);
-  font-size: 1.35rem;
-}
-.friend-circle__stat strong { color: var(--fc-main); }
-.friend-circle__select,
-.friend-circle__search {
-  padding: 0 12px;
+  box-shadow: var(--shadow-l1, 0 6px 16px rgba(15, 23, 42, .06));
   font: inherit;
   font-size: 1.4rem;
 }
 .friend-circle__search {
-  flex: 1 1 220px;
   min-width: 0;
+  padding: 0 12px;
 }
-.friend-circle__select { flex: 0 0 auto; }
+.friend-circle__select {
+  padding: 0 30px 0 12px;
+}
 .friend-circle__warnings {
-  margin: 14px 0;
-  padding: 12px 14px;
+  margin: 0 0 16px;
+  padding: 10px 13px;
   border: 1px solid rgba(233, 105, 0, .28);
   border-radius: 12px;
   background: rgba(233, 105, 0, .08);
-  color: var(--fc-main);
-}
-.friend-circle__warnings h2 {
-  margin: 0 0 6px;
-  font-size: 1.5rem;
-}
-.friend-circle__warnings p {
-  margin: 4px 0;
   color: var(--fc-muted);
   font-size: 1.35rem;
 }
+.friend-circle__warnings p { margin: 6px 0 0; }
 .friend-circle__list {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 14px;
-  margin-top: 16px;
 }
 .friend-circle__item {
   display: grid;
-  grid-template-columns: 54px minmax(0, 1fr);
-  gap: 13px;
-  padding: 16px;
-  border: 1px solid var(--fc-border);
-  border-radius: 16px;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+  min-height: 74px;
+  padding: 12px 13px;
+  border: 1px solid rgba(120, 130, 150, .20);
+  border-radius: 14px;
   background: var(--fc-card);
-  box-shadow: var(--shadow-l1, 0 10px 24px rgba(15, 23, 42, .08));
+  box-shadow: var(--shadow-l1, 0 8px 20px rgba(15, 23, 42, .08));
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.friend-circle__item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-l2, 0 12px 26px rgba(15, 23, 42, .12));
+}
+.friend-circle__item.is-hidden,
+.friend-circle__empty.is-hidden,
+.friend-circle__more.is-hidden {
+  display: none !important;
+}
+.friend-circle__avatar-link {
+  width: 42px;
+  height: 42px;
 }
 .friend-circle__avatar {
-  width: 54px;
-  height: 54px;
-  border-radius: 16px;
+  display: block;
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 12px !important;
   object-fit: cover;
   background: rgba(120, 130, 150, .14);
 }
-.friend-circle__meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-  margin-bottom: 5px;
-  color: var(--fc-muted);
-  font-size: 1.25rem;
-}
-.friend-circle__friend {
-  color: var(--fc-accent);
-  font-weight: 700;
-}
 .friend-circle__title {
-  display: inline-block;
-  margin-bottom: 7px;
+  display: -webkit-box;
+  overflow: hidden;
   color: var(--fc-main);
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   font-weight: 700;
   line-height: 1.35;
   text-decoration: none;
   word-break: break-word;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 .friend-circle__title:hover { color: var(--fc-accent); }
-.friend-circle__summary {
-  margin: 0;
+.friend-circle__date {
+  display: block;
+  margin-top: 4px;
   color: var(--fc-muted);
-  font-size: 1.4rem;
-  line-height: 1.65;
-  word-break: break-word;
+  font-size: 1.2rem;
+  line-height: 1.2;
 }
 .friend-circle__empty {
-  padding: 22px;
+  margin: 12px 0 0;
+  padding: 16px;
   border: 1px dashed var(--fc-border);
-  border-radius: 16px;
+  border-radius: 12px;
   color: var(--fc-muted);
   text-align: center;
 }
-@media (min-width: 720px) {
-  .friend-circle__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.friend-circle__more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 18px;
+  color: var(--fc-muted);
+  font-size: 1.3rem;
 }
+.friend-circle__more button {
+  min-height: 38px;
+  padding: 0 18px;
+  border: 1px solid rgba(120, 130, 150, .24);
+  border-radius: 10px;
+  background: var(--fc-card);
+  color: var(--fc-main);
+  box-shadow: var(--shadow-l1, 0 6px 16px rgba(15, 23, 42, .06));
+  cursor: pointer;
+  font: inherit;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+.friend-circle__more button:hover { color: var(--fc-accent); }
 @media (max-width: 560px) {
-  .friend-circle__hero { padding: 18px; }
-  .friend-circle__item { grid-template-columns: 44px minmax(0, 1fr); padding: 14px; }
-  .friend-circle__avatar { width: 44px; height: 44px; border-radius: 13px; }
-  .friend-circle__select { width: 100%; }
+  .friend-circle__header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .friend-circle__stats { justify-content: flex-start; }
+  .friend-circle__toolbar { grid-template-columns: 1fr; }
+  .friend-circle__more {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .friend-circle__more button { width: 100%; }
+  .friend-circle__item {
+    grid-template-columns: 40px minmax(0, 1fr);
+    min-height: 68px;
+    padding: 11px 12px;
+  }
+  .friend-circle__avatar-link,
+  .friend-circle__avatar {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 12px !important;
+  }
 }
 </style>
 {{ end }}
@@ -164,61 +204,66 @@
 {{ $warnings := $data.warnings | default slice }}
 
 <section class="friend-circle" data-friend-circle>
-  <header class="friend-circle__hero">
-    <h1>{{ .Title }}</h1>
-    {{ with .Params.description }}<p>{{ . }}</p>{{ end }}
+  <header class="friend-circle__header">
+    <div>
+      <h1>{{ .Title }}</h1>
+      {{ with .Params.description }}<p>{{ . }}</p>{{ end }}
+    </div>
+    <div class="friend-circle__stats">
+      <span>{{ len $friends }} friends</span>
+      <span>{{ len $posts }} posts</span>
+      {{ with $data.generated_at }}<span>{{ time.Format "2006-01-02 15:04" (time .) }}</span>{{ end }}
+    </div>
   </header>
-
-  <div class="friend-circle__stats" aria-label="Friend circle stats">
-    <span class="friend-circle__stat"><strong>{{ len $friends }}</strong> friends</span>
-    <span class="friend-circle__stat"><strong>{{ len $posts }}</strong> posts</span>
-    {{ with $data.generated_at }}<span class="friend-circle__stat">updated {{ time.Format "2006-01-02 15:04" (time .) }}</span>{{ end }}
-  </div>
 
   <div class="friend-circle__toolbar">
     <input class="friend-circle__search" type="search" placeholder="搜索文章或朋友" data-fc-search>
     <select class="friend-circle__select" data-fc-friend aria-label="Filter by friend">
       <option value="">全部朋友</option>
       {{ range $friends }}
-        <option value="{{ .name }}">{{ .name }}</option>
+        {{ if gt .post_count 0 }}<option value="{{ .name }}">{{ .name }}</option>{{ end }}
       {{ end }}
     </select>
   </div>
 
   {{ if gt (len $warnings) 0 }}
-    <aside class="friend-circle__warnings">
-      <h2>Feed warnings</h2>
+    <details class="friend-circle__warnings">
+      <summary>有 {{ len $warnings }} 个 feed 暂时不可用</summary>
       {{ range $warnings }}
         <p><strong>{{ .friend }}:</strong> {{ .message }}</p>
       {{ end }}
-    </aside>
+    </details>
   {{ end }}
 
-  <div class="friend-circle__list" data-fc-list>
-    {{ range $posts }}
-      {{ $published := "" }}
-      {{ with .published }}{{ $published = time.Format "2006-01-02" (time .) }}{{ end }}
-      <article class="friend-circle__item" data-fc-item data-friend="{{ .friend }}" data-text="{{ printf `%s %s %s` .friend .title .summary | plainify }}">
-        <a href="{{ .site }}" title="{{ .friend }}">
-          {{ if .avatar }}
-            <img class="friend-circle__avatar" src="{{ .avatar }}" alt="{{ .friend }}" loading="lazy">
-          {{ else }}
-            <span class="friend-circle__avatar" aria-hidden="true"></span>
-          {{ end }}
-        </a>
-        <div>
-          <div class="friend-circle__meta">
-            <a class="friend-circle__friend" href="{{ .site }}">{{ .friend }}</a>
-            {{ with $published }}<time datetime="{{ . }}">{{ . }}</time>{{ end }}
+  {{ if gt (len $posts) 0 }}
+    <div class="friend-circle__list" data-fc-list data-page-size="8">
+      {{ range $posts }}
+        {{ $published := "" }}
+        {{ with .published }}{{ $published = time.Format "2006-01-02" (time .) }}{{ end }}
+        <article class="friend-circle__item" data-fc-item data-friend="{{ .friend }}" data-text="{{ printf `%s %s` .friend .title | plainify }}">
+          <a class="friend-circle__avatar-link" href="{{ .site }}" title="{{ .friend }}" target="_blank" rel="noopener">
+            {{ if .avatar }}
+              <img class="friend-circle__avatar" src="{{ .avatar }}" alt="{{ .friend }}" loading="lazy">
+            {{ else }}
+              <span class="friend-circle__avatar" aria-hidden="true"></span>
+            {{ end }}
+          </a>
+          <div class="friend-circle__text">
+            <a class="friend-circle__title" href="{{ .url }}" target="_blank" rel="noopener">{{ .title }}</a>
+            {{ with $published }}<time class="friend-circle__date" datetime="{{ . }}">{{ . }}</time>{{ end }}
           </div>
-          <a class="friend-circle__title" href="{{ .url }}" target="_blank" rel="noopener">{{ .title }}</a>
-          {{ with .summary }}<p class="friend-circle__summary">{{ . }}</p>{{ end }}
-        </div>
-      </article>
-    {{ end }}
-  </div>
+        </article>
+      {{ end }}
+    </div>
+    <div class="friend-circle__more">
+      <span data-fc-count></span>
+      <button type="button" data-fc-more>Load More</button>
+    </div>
+  {{ else }}
+    <p class="friend-circle__empty">还没有抓到朋友的新文章。</p>
+  {{ end }}
 
-  <p class="friend-circle__empty" data-fc-empty hidden>没有匹配的文章。</p>
+  <p class="friend-circle__empty is-hidden" data-fc-empty>没有匹配的文章。</p>
 </section>
 
 <script>
@@ -227,23 +272,47 @@
   if (!root) return;
   const search = root.querySelector('[data-fc-search]');
   const friend = root.querySelector('[data-fc-friend]');
+  const list = root.querySelector('[data-fc-list]');
   const items = [...root.querySelectorAll('[data-fc-item]')];
   const empty = root.querySelector('[data-fc-empty]');
-  const apply = () => {
+  const more = root.querySelector('[data-fc-more]');
+  const count = root.querySelector('[data-fc-count]');
+  const pageSize = Number(list?.dataset.pageSize || 8);
+  let visibleLimit = pageSize;
+
+  const matchedItems = () => {
     const keyword = (search.value || '').trim().toLowerCase();
     const selected = friend.value || '';
-    let shown = 0;
-    items.forEach((item) => {
+    return items.filter((item) => {
       const okFriend = !selected || item.dataset.friend === selected;
       const okText = !keyword || (item.dataset.text || '').toLowerCase().includes(keyword);
-      const visible = okFriend && okText;
-      item.hidden = !visible;
-      if (visible) shown += 1;
+      return okFriend && okText;
     });
-    empty.hidden = shown !== 0;
   };
-  search.addEventListener('input', apply);
-  friend.addEventListener('change', apply);
+
+  const apply = () => {
+    const matched = matchedItems();
+    items.forEach((item) => item.classList.add('is-hidden'));
+    matched.slice(0, visibleLimit).forEach((item) => item.classList.remove('is-hidden'));
+    const shown = Math.min(visibleLimit, matched.length);
+    if (empty) empty.classList.toggle('is-hidden', matched.length !== 0);
+    if (more) more.classList.toggle('is-hidden', shown >= matched.length);
+    if (count) count.textContent = matched.length ? `已显示 ${shown} / ${matched.length}` : '';
+  };
+
+  const resetAndApply = () => {
+    visibleLimit = pageSize;
+    apply();
+  };
+
+  search.addEventListener('input', resetAndApply);
+  friend.addEventListener('change', resetAndApply);
+  if (more) {
+    more.addEventListener('click', () => {
+      visibleLimit += pageSize;
+      apply();
+    });
+  }
   apply();
 })();
 </script>
