@@ -1,22 +1,29 @@
 # Hugo Friend Circle
 
-一个基于 RSS / Atom、HTML fallback 和 GitHub Actions 的 Hugo 友链朋友圈。它不需要后端、不需要数据库，只会定时抓取 `data/friends.yaml` 中的友链动态，并生成 Hugo 可直接读取的 `data/friend_posts.json`。
+A backend-free friend-circle page for Hugo blogs, powered by RSS / Atom, HTML fallback, and GitHub Actions.
+
+It does not need a server or a database. The fetch script reads `data/friends.yaml`, writes `data/friend_posts.json`, and Hugo renders the page from that data file.
 
 ## Features
 
-- RSS / Atom 抓取
-- 未暴露 RSS 时，自动尝试解析首页 / 归档页中的日期文章链接
-- GitHub Actions 定时更新
-- 按发布时间倒序展示
-- 支持朋友头像、文章标题、发布时间
-- 支持搜索、按朋友筛选、Load More 分批展开
-- feed 抓取失败时只记录 warning，不阻塞构建
-- 支持最大文章数、单站点文章数、起始日期、超时和重试配置
-- 页面样式适配 Hugo Stack，也可以作为普通 Hugo 页面运行
+- Fetch RSS and Atom feeds.
+- If a site does not expose RSS, try dated links on the homepage, `/archives/`, `/posts/`, and `/post/`.
+- Sort posts by publish time.
+- Show avatar, article title, and date.
+- Search, filter by friend, and expand with `Load More`.
+- Keep failed feeds as warnings instead of breaking the build.
+- Configure total post limit, per-friend limit, start date, timeout, retries, and skipped sites.
+- Works as a standalone Hugo page or as a Stack-theme page.
+
+## Data Policy
+
+This repository intentionally contains only example data.
+
+Do not put your private or personal friend list into this template repository unless you want it to be public. For a real blog, keep your own `data/friends.yaml` and generated `data/friend_posts.json` in your blog repository.
 
 ## Quick Start
 
-1. 编辑 `data/friends.yaml`：
+Edit `data/friends.yaml` in your Hugo site:
 
 ```yaml
 settings:
@@ -37,7 +44,7 @@ friends:
   - name: HTML Only Friend
     site: https://example.org/
     avatar: https://example.org/avatar.png
-    description: No RSS exposed; fallback will try dated links on homepage/archives.
+    description: No RSS exposed; fallback will try dated links on homepage and archives.
 
   - name: Offline Friend
     site: https://old-domain.example/
@@ -47,14 +54,14 @@ friends:
     circle_reason: domain unavailable
 ```
 
-`feed` 是可选项。未填写或抓取失败时，脚本会尝试解析这些页面中的日期文章链接：
+`feed` is optional. If it is missing or unavailable, the script tries to parse dated article links from:
 
-- 站点首页
+- the homepage
 - `/archives/`
 - `/posts/`
 - `/post/`
 
-如果某个站点很慢，可以给单个朋友覆盖超时：
+For slow sites, override timeout and retries per friend:
 
 ```yaml
   - name: Slow Friend
@@ -64,34 +71,70 @@ friends:
     retries: 3
 ```
 
-2. 本地生成数据：
+Generate data locally:
 
 ```bash
 python scripts/fetch_feeds.py
 ```
 
-3. 在 Hugo 中创建页面：
+Create a Hugo page:
 
 ```yaml
 ---
-title: "友链朋友圈"
+title: "Friend Circle"
+description: "Recent posts from friends."
 layout: "friends-circle"
 slug: "friends-circle"
 comments: false
 ---
 ```
 
-4. 启用 `.github/workflows/update.yml` 后，GitHub Actions 会每 3 小时更新一次 `data/friend_posts.json`。
+## Updating Automatically
+
+There are two common ways to keep the page fresh.
+
+### Option A: Commit Generated Data
+
+Use `.github/workflows/update.yml`. It runs the fetch script and commits `data/friend_posts.json`.
+
+Add a schedule in your own blog repository if you want automatic updates:
+
+```yaml
+on:
+  schedule:
+    - cron: "0 */3 * * *"
+  workflow_dispatch:
+```
+
+This is easy to inspect because every update is committed, but it creates frequent generated-data commits.
+
+### Option B: Generate Before Building
+
+Run the fetch script in your deploy workflow before `hugo`:
+
+```yaml
+- uses: actions/setup-python@v5
+  with:
+    python-version: "3.x"
+
+- name: Fetch friend circle
+  run: python scripts/fetch_feeds.py
+
+- name: Build site
+  run: hugo --minify
+```
+
+This avoids committing generated data. If you want updates without manual commits, schedule the deploy workflow itself.
 
 ## Stack Theme
 
-如果你使用 Hugo Stack，把这些文件复制到站点根目录即可：
+For a Stack-theme site, copy these files into the site root:
 
 - `scripts/fetch_feeds.py`
 - `data/friends.yaml`
 - `data/friend_posts.json`
 - `layouts/page/friends-circle.html`
-- `content/friends-circle/index.md` 或你自己的页面路径
-- `.github/workflows/update.yml`
+- `content/friends-circle/index.md`, or your own page path
+- `.github/workflows/update.yml`, if you want committed generated data
 
-页面会使用 Stack 的 `baseof.html`、暗色模式变量和卡片变量。
+The template uses Stack-compatible CSS variables when available, and falls back to plain Hugo-friendly styling otherwise.

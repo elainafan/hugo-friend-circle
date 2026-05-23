@@ -1,13 +1,7 @@
 name: update friend circle
 
 on:
-  schedule:
-    - cron: "0 */3 * * *"
   workflow_dispatch:
-  push:
-    paths:
-      - "data/friends.yaml"
-      - "scripts/fetch_feeds.py"
 
 permissions:
   contents: write
