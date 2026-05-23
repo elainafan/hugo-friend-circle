@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="{{ site.LanguageCode | default `zh-cn` }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ if .Title }}{{ .Title }} | {{ end }}{{ site.Title }}</title>
+    {{ block "head" . }}{{ end }}
+  </head>
+  <body>
+    <main class="main">
+      {{ block "main" . }}{{ end }}
+    </main>
+  </body>
+</html>
