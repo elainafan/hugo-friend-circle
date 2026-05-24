@@ -10,6 +10,8 @@
 
 这个示例接入在 Hugo Stack 主题的友链页面中：上方保留普通友链卡片，下方展示朋友们最近写了什么。
 
+搭建记录：<https://www.elainafan.one/p/在hugo博客中优雅地添加轻量朋友圈/>
+
 ## 这是什么
 
 `hugo-friend-circle` 是一个给 Hugo 博客用的友链朋友圈组件。它不需要后端、不需要数据库，只靠脚本抓取朋友站点的 RSS / Atom 或归档页，再生成 Hugo 可读取的 `data/friend_posts.json`。

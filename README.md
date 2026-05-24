@@ -10,6 +10,8 @@ Live example: <https://www.elainafan.one/friends/>
 
 The example is integrated into a Hugo Stack theme friend-link page. Friend cards stay on the page, and the friend-circle stream is rendered below them.
 
+Setup tutorial: <https://www.elainafan.one/p/在hugo博客中优雅地添加轻量朋友圈/>
+
 ## What Is This
 
 `hugo-friend-circle` is a friend-circle component for Hugo blogs. It needs no backend and no database. A Python script fetches friends' RSS / Atom feeds or dated article links from HTML pages, writes `data/friend_posts.json`, and Hugo renders the page from that data.
